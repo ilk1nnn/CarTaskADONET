@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:CarTaskADONET"
+        xmlns:local="clr-namespace:CarTaskADONET" xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Title="MainWindow" Height="800" Width="1140">
@@ -229,7 +229,7 @@
                         <DataTemplate>
                             <Border
                                 Width="300"
-                                Height="250"
+                                Height="400"
                                 Margin="0,10,20,0">
 
                                 <Canvas >
@@ -237,13 +237,13 @@
                                     <Border
                                     Background="White"
                                     Width="250"
-                                    Height="200"
+                                    Height="330"
                                     CornerRadius="20"
                                     BorderThickness="0"
                                     >
 
                                         <StackPanel Orientation="Vertical">
-                                            <Image Width="30" Height="30"
+                                            <Image Width="80" Height="80"
                                                    Source="{Binding ImagePath}"
                                                    Margin="50,20,0,0"></Image>
 
@@ -260,6 +260,41 @@
                                                        FontWeight="Bold"
                                                        Foreground="Black"
                                                        Text="{Binding Year}"
+                                                       ></TextBlock>
+
+                                            <TextBlock FontSize="11"
+                                                       Margin="10,10,0,0"
+                                                       FontWeight="Bold"
+                                                       Foreground="Black"
+                                                       Text="{Binding Mileage}"
+                                                       ></TextBlock>
+
+                                            <TextBlock FontSize="11"
+                                                       Margin="10,10,0,0"
+                                                       FontWeight="Bold"
+                                                       Foreground="Black"
+                                                       Text="{Binding Color}"
+                                                       ></TextBlock>
+
+                                            <TextBlock FontSize="11"
+                                                       Margin="10,10,0,0"
+                                                       FontWeight="Bold"
+                                                       Foreground="Black"
+                                                       Text="{Binding Type}"
+                                                       ></TextBlock>
+
+                                            <TextBlock FontSize="11"
+                                                       Margin="10,10,0,0"
+                                                       FontWeight="Bold"
+                                                       Foreground="Black"
+                                                       Text="{Binding FuelType}"
+                                                       ></TextBlock>
+
+                                            <TextBlock FontSize="11"
+                                                       Margin="10,10,0,0"
+                                                       FontWeight="Bold"
+                                                       Foreground="Black"
+                                                       Text="{Binding IsNew}"
                                                        ></TextBlock>
 
                                             <StackPanel Orientation="Horizontal">
@@ -331,7 +366,15 @@
                                Text="Brand : "></TextBlock>
                     <ComboBox Width="100"
                               Height="30"
-                              Margin="0,5,0,0"></ComboBox>
+                              ItemsSource="{Binding AllBrands, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                              Margin="0,5,0,0"
+                              SelectedValue="{Binding Brand, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding SelectedBrandCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ComboBox>
                     <TextBlock Width="90"
                                Height="30"
                                FontSize="25"
@@ -339,13 +382,23 @@
                                Text="Is New : "></TextBlock>
                     <ComboBox Width="100"
                               Height="30"
-                              Margin="0,5,0,0"></ComboBox>
+                              ItemsSource="{Binding AllIsNew,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                              Margin="0,5,0,0"
+                              SelectedValue="{Binding IsNew, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding SelectedIsNewCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ComboBox>
                     <TextBlock Width="100"
                                Height="33"
                                FontSize="25"
                                Margin="17,10,10,10"
                                Text="Mileage : "></TextBlock>
                     <TextBox Width="80"
+                             Name="mintxtb"
                              FontSize="20"
                               Height="30"
                               Margin="10,5,0,0"></TextBox>
@@ -355,6 +408,7 @@
                                Margin="20,10,10,10"
                                Text="to"></TextBlock>
                     <TextBox Width="80"
+                             Name="maxtxtb"
                              FontSize="20"
                               Height="30"
                               Margin="10,5,0,0"></TextBox>
@@ -364,6 +418,7 @@
                                Margin="17,10,10,10"
                                Text="Price : "></TextBlock>
                     <TextBox Width="80"
+                             Name="minpricetxtb"
                              FontSize="20"
                               Height="30"
                               Margin="10,5,0,0"></TextBox>
@@ -373,6 +428,7 @@
                                Margin="20,10,10,10"
                                Text="to"></TextBlock>
                     <TextBox Width="80"
+                             Name="maxpricetxtb"
                              FontSize="20"
                               Height="30"
                               Margin="10,5,0,0"></TextBox>
@@ -390,7 +446,16 @@
                                Text="Type : "></TextBlock>
                     <ComboBox Width="100"
                               Height="30"
-                              Margin="0,5,0,0"></ComboBox>
+                              ItemsSource="{Binding AllTypes,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                               SelectedValue="{Binding Type, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                              Margin="0,5,0,0">
+
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding SelectedTypeCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ComboBox>
                     <TextBlock Width="60"
                                Height="33"
                                FontSize="25"
@@ -399,6 +464,7 @@
                     <TextBox Width="80"
                              FontSize="20"
                               Height="30"
+                             Name="yeartxtb"
                               Margin="5,5,0,0"></TextBox>
                     <TextBlock Width="75"
                                Height="30"
@@ -407,15 +473,32 @@
                                Text="Color : "></TextBlock>
                     <ComboBox Width="100"
                               Height="30"
-                              Margin="0,5,0,0"></ComboBox>
+                              ItemsSource="{Binding AllColors, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                              Margin="0,5,0,0"
+                              SelectedValue="{Binding Color, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                              
+                              ></ComboBox>
                     <TextBlock Width="120"
-                               Height="30"
+                               Height="35"
                                FontSize="25"
                                Margin="17,10,10,10"
                                Text="Fuel Type : "></TextBlock>
                     <ComboBox Width="100"
                               Height="30"
-                              Margin="0,5,0,0"></ComboBox>
+                              Margin="0,5,0,0"
+                              ItemsSource="{Binding AllFuels ,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                               SelectedValue="{Binding Fuel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                              
+                              ></ComboBox>
+
+                    <Button Width="110"
+                            Height="35"
+                            Margin="50,5,0,0"
+                            Content="Filter"
+                            FontSize="23"
+                            Command="{Binding FilterCommand}"
+                            Background="Black"
+                            Foreground="White"></Button>
                 </StackPanel>
             </Grid>
             
